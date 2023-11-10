@@ -52,7 +52,7 @@ class Ernie4Bot(ChatHistoryMixin, BaseBot):
         ms.append({"role": "user", "content": f"{query}"})
         # user: 表示用户 assistant: 表示对话助手 function: 表示函数
         # api参考:  https://console.bce.baidu.com/tools/#/api?product=AI&project=%E5%8D%83%E5%B8%86%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%B9%B3%E5%8F%B0&parent=ERNIE-Bot-4&api=rpc%2F2.0%2Fai_custom%2Fv1%2Fwenxinworkshop%2Fchat%2Fcompletions_pro&method=post
-        print(1111, ms)
+        # print(1111, ms)
         payload = json.dumps(
             {"messages": ms, "stream": False}
         )
@@ -80,6 +80,7 @@ class Ernie4Bot(ChatHistoryMixin, BaseBot):
             r = await self.get_ask_res_async(query)
         except Exception as e:
             print(str(e))
+        self.add_message(query, r)
         print(r)
         return r
 
