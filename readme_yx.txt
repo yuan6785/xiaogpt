@@ -36,7 +36,8 @@
         else: # 如果作者远端没有更新,0.1代表在1.82的基础上修改了0.1个版本
             git tag -a yx1.82-0.1 -m "yx1.82-0.1"
         #
-        git push
+        git push # 将tag版本推到本地fork_main分支
+        git push origin --tags # 推送所有本地tag版本到远端，也可以只推单个tag版本 git push origin yx1.82-0.1
 
         
 调试安装(不带版本号):
