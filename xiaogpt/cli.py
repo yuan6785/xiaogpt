@@ -166,6 +166,25 @@ def main():
         dest="deployment_id",
         help="specify deployment id, only used when api_base points to azure",
     )
+    # add by yx
+    parser.add_argument(
+        "--baidu_api_key",
+        dest="baidu_api_key",
+        help="baidu api key",
+    )
+    parser.add_argument(
+        "--baidu_secret_key",
+        dest="baidu_secret_key",
+        help="baidu secret key",
+    )
+    group.add_argument(
+        "--use_ernie4", # ERNIE-Bot 4.0, 文心一言4.0大模型
+        dest="bot",
+        action="store_const",
+        const="ernie4",
+        help="if use ernie4",
+    )
+    # end add by yx
 
     options = parser.parse_args()
     if options.bot in ["glm", "bard"] and options.stream:
