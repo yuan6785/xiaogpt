@@ -84,6 +84,10 @@ class Config:
     gpt_options: dict[str, Any] = field(default_factory=dict)
     bing_cookie_path: str = ""
     bing_cookies: dict | None = None
+    # add by yx
+    baidu_api_key: str = os.getenv("BAIDU_API_KEY", "")
+    baidu_secret_key: str = os.getenv("BAIDU_SECRET_KEY", "")
+    # end add by yx
 
     def __post_init__(self) -> None:
         if self.proxy:
