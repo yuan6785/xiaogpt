@@ -60,7 +60,7 @@ class Ernie4Bot(ChatHistoryMixin, BaseBot):
         # print(response.text)
         res_json = response.json()
         result = res_json['result']
-        print(result)
+        # print(result)
         return result
 
 
