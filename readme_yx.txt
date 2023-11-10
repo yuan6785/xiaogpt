@@ -37,7 +37,10 @@
             git tag -a yx1.82-0.1 -m "yx1.82-0.1"
         #
         git push
-        
 
-更新安装:
+        
+调试安装(不带版本号):
+    bash -c 'http_proxy=http://127.0.0.1:8118 https_proxy=http://127.0.0.1:8118  /opt/software/anconda3/envs/py310_xiaogpt/bin/pip install git+https://github.com/yuan6785/xiaogpt.git'
+
+更新安装(需要版本号):
     bash -c 'http_proxy=http://127.0.0.1:8118 https_proxy=http://127.0.0.1:8118  /opt/software/anconda3/envs/py310_xiaogpt/bin/pip install git+https://github.com/yuan6785/xiaogpt.git@yx1.82-0.1'
