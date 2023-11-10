@@ -190,6 +190,7 @@ def main():
     if options.bot in ["glm", "bard"] and options.stream:
         raise Exception("For now ChatGLM do not support stream")
     config = Config.from_options(options)
+    print(11111, config)
 
     miboy = MiGPT(config)
     loop = asyncio.get_event_loop()
