@@ -29,11 +29,12 @@
         git checkout fork_main
         git commit -am  "修改信息"
         git push
+        # 下面一定注意区分是否需要同步远端
         if 1: # 如果作者远端的版本也要同步更新，则执行下面两句
             git fetch upstream 
             git merge upstream/v1.83 # 例如: git merge upstream/
             git tag -a yx1.83 -m "yx1.83"
-        else: # 如果作者远端没有更新,0.1代表在1.82的基础上修改了0.1个版本
+        else: # 如果作者远端没有更新,0.1代表在1.82的基础上修改了0.1个版本------
             git tag -a yx1.82-0.1 -m "yx1.82-0.1"
         #
         git push # 将tag版本推到本地fork_main分支

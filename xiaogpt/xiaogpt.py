@@ -488,6 +488,7 @@ class MiGPT:
                 print("-" * 20)
                 print("问题：" + query + "？")
                 if not self.chatbot.has_history():
+                    # yx des: 如果第一次回答, need_change_prompt为false，但是self.config.prompt还是config.PROMPT默认值，所以会加上限制条件
                     query = f"{query}，{self.config.prompt}"
                 if self.config.mute_xiaoai:
                     await self.stop_if_xiaoai_is_playing()
