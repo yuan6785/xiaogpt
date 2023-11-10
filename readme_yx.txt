@@ -38,4 +38,6 @@
         #
         git push
         
-     
+
+更新安装:
+    bash -c 'http_proxy=http://127.0.0.1:8118 https_proxy=http://127.0.0.1:8118  /opt/software/anconda3/envs/py310_xiaogpt/bin/pip install git+https://github.com/yuan6785/xiaogpt.git@yx1.82-0.1'
