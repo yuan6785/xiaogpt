@@ -7,6 +7,8 @@ from xiaogpt.bot.base_bot import BaseBot, ChatHistoryMixin
 from xiaogpt.utils import split_sentences
 import requests
 import json
+import asyncio 
+import concurrent.futures
 
 
 class Ernie4Bot(ChatHistoryMixin, BaseBot):
@@ -62,12 +64,19 @@ class Ernie4Bot(ChatHistoryMixin, BaseBot):
         result = res_json['result']
         # print(result)
         return result
+    
+    async def get_ask_res_async(self, query):
+        loop = asyncio.get_event_loop()
+        with concurrent.futures.ThreadPoolExecutor(1) as executor:
+            result = await loop.run_in_executor(executor, self.get_ask_res, query)
+        return result
 
 
     async def ask(self, query, **options):
         r = ""
         try:
-            r = self.get_ask_res(query)
+            # 将 r = self.get_ask_res(query) 放到线程池里执行，并await
+            r = await self.get_ask_res_async(query)
         except Exception as e:
             print(str(e))
         print(r)
