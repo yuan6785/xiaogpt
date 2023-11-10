@@ -7,7 +7,9 @@ from xiaogpt.bot.newbing_bot import NewBingBot
 from xiaogpt.bot.glm_bot import GLMBot
 from xiaogpt.bot.bard_bot import BardBot
 from xiaogpt.bot.langchain_bot import LangChainBot
+from xiaogpt.bot.ernie4_bot import Ernie4Bot  # add by yx
 from xiaogpt.config import Config
+
 
 BOTS: dict[str, type[BaseBot]] = {
     "gpt3": GPT3Bot,
@@ -16,6 +18,7 @@ BOTS: dict[str, type[BaseBot]] = {
     "glm": GLMBot,
     "bard": BardBot,
     "langchain": LangChainBot,
+    "ernie4":  Ernie4Bot # add by yx
 }
 
 
@@ -34,4 +37,5 @@ __all__ = [
     "BardBot",
     "get_bot",
     "LangChainBot",
+    "Ernie4Bot" # add by yx
 ]
