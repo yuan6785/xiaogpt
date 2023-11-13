@@ -395,7 +395,7 @@ class MiGPT:
             queue.put_nowait(EOF)
             if future.exception():
                 self.log.error(future.exception())
-
+        # des by yx: 这里启动polling_event.set()是因为开始获取让用户输入,判断用户输入的是否是终止命令, 这样就会停止返回ai生成信息。
         self.polling_event.set()
         queue = asyncio.Queue()
         is_eof = False
@@ -449,9 +449,9 @@ class MiGPT:
             print(f"Running xiaogpt now, 用`{'/'.join(self.config.keyword)}`开头来提问")
             print(f"或用`{self.config.start_conversation}`开始持续对话")
             while True:
-                self.polling_event.set()
-                new_record = await self.last_record.get()
-                self.polling_event.clear()  # stop polling when processing the question
+                self.polling_event.set() # # des by yx: 这里启动polling_event.set()是因为开始获取让用户输入信息
+                new_record = await self.last_record.get() # des by yx: 这里直到用户输入信息才会继续往下执行
+                self.polling_event.clear()  # stop polling when processing the question. des by yx: 这里让self.polling_event.wait()挂起
                 query = new_record.get("query", "").strip()
 
                 if query == self.config.start_conversation:
