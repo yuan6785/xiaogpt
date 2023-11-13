@@ -61,6 +61,8 @@ class Ernie4Bot(ChatHistoryMixin, BaseBot):
         response = requests.request("POST", url, headers=headers, data=payload, timeout=(10, 100))
 
         print(response.text)   # 后期这里取消掉
+        # 后面报result错误，很有可能是因为 {"error_code":336003,"error_msg":"message content can not be empty","id":"as-3vj8dnkd4q"}
+        # 因为 query 为空导致的。 小爱触发相声模式，然后说一句话，就会出现这个错误。
         res_json = response.json()
         result = res_json['result']
         # print(result)
@@ -75,14 +77,17 @@ class Ernie4Bot(ChatHistoryMixin, BaseBot):
 
     async def ask(self, query, **options):
         r = ""
-        try:
-            # 将 r = self.get_ask_res(query) 放到线程池里执行，并await
-            r = await self.get_ask_res_async(query)
-        except Exception as e:
-            print(str(e))
-        self.add_message(query, r)
-        print(r)
-        return r
+        if  query:
+            try:
+                # 将 r = self.get_ask_res(query) 放到线程池里执行，并await
+                r = await self.get_ask_res_async(query)
+            except Exception as e:
+                print(str(e))
+            self.add_message(query, r)  # todo 判断query是否为空，为空则不添加
+            print(r)
+            return r
+        else:
+            return "读取到小爱信息可能为空"
 
     def ask_stream(self, query: str, **options: Any):
         raise Exception("Bard do not support stream")
