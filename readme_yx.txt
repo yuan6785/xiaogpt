@@ -35,7 +35,7 @@
              # git fetch upstream 
             git fetch upstream --tags  # git fetch upstream --tags 会执行 git fetch upstream 的全部操作，并且还会额外获取远程仓库上的所有标签
             git merge v1.83 # 合并upstream的tag，不用加upstream前缀; 但如果是合并分支，则需要加upstream前缀，例如:  git merge upstream/main 
-            git tag -a yx1.83 -m "yx1.83"
+            git tag -a yx1.83 -m "yx1.83" # 这里的tag加一个yx前缀表示是我自己的tag，不是作者的tag
         else: # 如果作者远端没有更新,0.1代表在1.82的基础上修改了0.1个版本------
             git tag -a yx1.82-0.1 -m "yx1.82-0.1"
         #
