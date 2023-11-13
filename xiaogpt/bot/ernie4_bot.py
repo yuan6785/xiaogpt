@@ -60,7 +60,7 @@ class Ernie4Bot(ChatHistoryMixin, BaseBot):
 
         response = requests.request("POST", url, headers=headers, data=payload, timeout=(10, 100))
 
-        # print(response.text)
+        print(response.text)
         res_json = response.json()
         result = res_json['result']
         # print(result)
