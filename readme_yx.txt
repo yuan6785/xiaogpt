@@ -21,8 +21,9 @@
 后期合并迭代操作:
     1（可选）. 合并作者的发布的版本到我本地fork的main分支，保持main分支和作者的一致(这一步仅仅是本地看，对于代码开发和合并没有任何用处)
         git checkout main
-        git fetch upstream 
-        git merge upstream/v1.83  
+        # git fetch upstream 
+        git fetch upstream --tags  # git fetch upstream --tags 会执行 git fetch upstream 的全部操作，并且还会额外获取远程仓库上的所有标签
+        git merge v1.83 # 合并upstream的tag，不用加upstream前缀; 但如果是合并分支，则需要加upstream前缀，例如:  git merge upstream/main 
         git push
 
     2 (必须). 修改fork_main的内容后的发版操作
@@ -31,8 +32,9 @@
         git push
         # 下面一定注意区分是否需要同步远端
         if 1: # 如果作者远端的版本也要同步更新，则执行下面两句
-            git fetch upstream 
-            git merge upstream/v1.83 # 例如: git merge upstream/
+             # git fetch upstream 
+            git fetch upstream --tags  # git fetch upstream --tags 会执行 git fetch upstream 的全部操作，并且还会额外获取远程仓库上的所有标签
+            git merge v1.83 # 合并upstream的tag，不用加upstream前缀; 但如果是合并分支，则需要加upstream前缀，例如:  git merge upstream/main 
             git tag -a yx1.83 -m "yx1.83"
         else: # 如果作者远端没有更新,0.1代表在1.82的基础上修改了0.1个版本------
             git tag -a yx1.82-0.1 -m "yx1.82-0.1"
