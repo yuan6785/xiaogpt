@@ -4,7 +4,7 @@ import argparse
 import json
 import os
 from dataclasses import dataclass, field
-from typing import Any, Iterable
+from typing import Any, Iterable, Literal
 
 from xiaogpt.utils import validate_proxy
 
@@ -43,7 +43,7 @@ EDGE_TTS_DICT = {
 
 DEFAULT_COMMAND = ("5-1", "5-5")
 
-KEY_WORD = ("帮我", "请回答")
+KEY_WORD = ("帮我", "请回答", "请")
 CHANGE_PROMPT_KEY_WORD = ("更改提示词",)
 PROMPT = "以下请用100字以内回答，请只回答文字不要带链接"
 # simulate_xiaoai_question
@@ -78,9 +78,8 @@ class Config:
     start_conversation: str = "开始持续对话"
     end_conversation: str = "结束持续对话"
     stream: bool = False
-    enable_edge_tts: bool = False
-    localhost: bool = True
-    edge_tts_voice: str = "zh-CN-XiaoxiaoNeural"
+    tts: Literal["mi", "edge"] = "mi"
+    tts_voice: str | None = None
     gpt_options: dict[str, Any] = field(default_factory=dict)
     bing_cookie_path: str = ""
     bing_cookies: dict | None = None
@@ -137,22 +136,26 @@ class Config:
         with open(config_path, "rb") as f:
             config = json.load(f)
             for key, value in config.items():
-                if value is not None and key in cls.__dataclass_fields__:
-                    if key == "keyword":
-                        if not isinstance(value, list):
-                            value = [value]
-                        value = [kw for kw in value if kw]
-                    elif key == "use_chatgpt_api":
-                        key, value = "bot", "chatgptapi"
-                    elif key == "use_gpt3":
-                        key, value = "bot", "gpt3"
-                    elif key == "use_newbing":
-                        key, value = "bot", "newbing"
-                    elif key == "use_glm":
-                        key, value = "bot", "glm"
-                    elif key == "use_bard":
-                        key, value = "bot", "bard"
-                    elif key == "use_langchain":
-                        key, value = "bot", "langchain"
+                if value is None:
+                    continue
+                if key == "keyword":
+                    if not isinstance(value, list):
+                        value = [value]
+                    value = [kw for kw in value if kw]
+                elif key == "use_chatgpt_api":
+                    key, value = "bot", "chatgptapi"
+                elif key == "use_gpt3":
+                    key, value = "bot", "gpt3"
+                elif key == "use_newbing":
+                    key, value = "bot", "newbing"
+                elif key == "use_glm":
+                    key, value = "bot", "glm"
+                elif key == "use_bard":
+                    key, value = "bot", "bard"
+                elif key == "use_langchain":
+                    key, value = "bot", "langchain"
+                elif key == "enable_edge_tts":
+                    key, value = "tts", "edge"
+                if key in cls.__dataclass_fields__:
                     result[key] = value
         return result

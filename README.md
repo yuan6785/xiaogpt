@@ -56,7 +56,7 @@ Play ChatGPT and other LLM with Xiaomi AI Speaker
 - 使用 gpt-3 的 api 那样可以更流畅的对话，速度快, 请 google 如何用 [openai api](https://platform.openai.com/account/api-keys) 命令 --use_gpt3
 - 如果你遇到了墙需要用 Cloudflare Workers 替换 api_base 请使用 `--api_base ${url}` 来替换。  **请注意，此处你输入的api应该是'`https://xxxx/v1`'的字样，域名需要用引号包裹**
 - 可以跟小爱说 `开始持续对话` 自动进入持续对话状态，`结束持续对话` 结束持续对话状态。
-- 可以使用 `--enable_edge_tts` 来获取更好的 tts 能力
+- 可以使用 `--tts edge` 来获取更好的 tts 能力
 - 可以使用 `--use_langchain` 替代 `--use_chatgpt_api` 来调用 LangChain（默认 chatgpt）服务，实现上网检索、数学运算..
 
 e.g.
@@ -76,7 +76,7 @@ xiaogpt --hardware LX06  --mute_xiaoai --stream
 export OPENAI_API_KEY=${your_api_key}
 xiaogpt --hardware LX06  --mute_xiaoai --use_gpt3
 # 如果你想用 edge-tts
-xiaogpt --hardware LX06 --cookie ${cookie} --use_chatgpt_api --enable_edge_tts
+xiaogpt --hardware LX06 --cookie ${cookie} --use_chatgpt_api --tts edge
 # 如果你想使用 LangChain + SerpApi 实现上网检索或其他本地服务（目前仅支持 stream 模式）
 export OPENAI_API_KEY=${your_api_key}
 export SERPAPI_API_KEY=${your_serpapi_key}
@@ -141,36 +141,35 @@ ChatGLM [文档](http://open.bigmodel.cn/doc/api#chatglm_130b)
 Bard-API [参考](https://github.com/dsdanielpark/Bard-API)
 ## 配置项说明
 
-| 参数                  | 说明                                              | 默认值                              |
-| --------------------- | ------------------------------------------------- | ----------------------------------- |
-| hardware              | 设备型号                                          |                                     |
-| account               | 小爱账户                                          |                                     |
-| password              | 小爱账户密码                                      |                                     |
-| openai_key            | openai的apikey                                    |                                     |
-| serpapi_api_key            | serpapi的key  参考 [SerpAPI](https://serpapi.com/)                                  |                                     |
-| glm_key               | chatglm 的 apikey                                    |                                     |
-| bard_token            | bard 的 token 参考 [Bard-API](https://github.com/dsdanielpark/Bard-API)                                 |                                     |
-| cookie                | 小爱账户cookie （如果用上面密码登录可以不填）     |                                     |
-| mi_did                | 设备did                                           |                                     |
-| use_command           | 使用 MI command 与小爱交互                        | `false`                             |
-| mute_xiaoai           | 快速停掉小爱自己的回答                            | `true`                              |
-| verbose               | 是否打印详细日志                                  | `false`                             |
-| bot                   | 使用的 bot 类型，目前支持gpt3,chatgptapi和newbing | `chatgptapi`                        |
-| enable_edge_tts       | 使用Edge TTS                                      | `false`                             |
-| edge_tts_voice        | Edge TTS 的嗓音                                   | `zh-CN-XiaoxiaoNeural`              |
-| prompt                | 自定义prompt                                      | `请用100字以内回答`                 |
-| keyword               | 自定义请求词列表                                  | `["请问"]`                          |
-| change_prompt_keyword | 更改提示词触发列表                                | `["更改提示词"]`                    |
-| start_conversation    | 开始持续对话关键词                                | `开始持续对话`                      |
-| end_conversation      | 结束持续对话关键词                                | `结束持续对话`                      |
-| stream                | 使用流式响应，获得更快的响应                      | `false`                             |
-| proxy                 | 支持 HTTP 代理，传入 http proxy URL               | ""                                  |
-| gpt_options           | OpenAI API 的参数字典                             | `{}`                                |
-| bing_cookie_path      | NewBing使用的cookie路径，参考[这里]获取           | 也可通过环境变量 `COOKIE_FILE` 设置 |
-| bing_cookies          | NewBing使用的cookie字典，参考[这里]获取           |                                     |
-| deployment_id         | Azure OpenAI 服务的 deployment ID                 |  参考这个[如何找到deployment_id](https://github.com/yihong0618/xiaogpt/issues/347#issuecomment-1784410784)                                   |
-| api_base         | 如果需要替换默认的api,或者使用Azure OpenAI 服务                |   例如：`https://abc-def.openai.azure.com/`                                  |
-| localhost             | 是否通过本地服务器加载EdgeTTS的音频输出           | `true`                              |
+| 参数                  | 说明                                                                    | 默认值                                                                                                    |
+| --------------------- | ----------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------- |
+| hardware              | 设备型号                                                                |                                                                                                           |
+| account               | 小爱账户                                                                |                                                                                                           |
+| password              | 小爱账户密码                                                            |                                                                                                           |
+| openai_key            | openai的apikey                                                          |                                                                                                           |
+| serpapi_api_key       | serpapi的key  参考 [SerpAPI](https://serpapi.com/)                      |                                                                                                           |
+| glm_key               | chatglm 的 apikey                                                       |                                                                                                           |
+| bard_token            | bard 的 token 参考 [Bard-API](https://github.com/dsdanielpark/Bard-API) |                                                                                                           |
+| cookie                | 小爱账户cookie （如果用上面密码登录可以不填）                           |                                                                                                           |
+| mi_did                | 设备did                                                                 |                                                                                                           |
+| use_command           | 使用 MI command 与小爱交互                                              | `false`                                                                                                   |
+| mute_xiaoai           | 快速停掉小爱自己的回答                                                  | `true`                                                                                                    |
+| verbose               | 是否打印详细日志                                                        | `false`                                                                                                   |
+| bot                   | 使用的 bot 类型，目前支持gpt3,chatgptapi和newbing                       | `chatgptapi`                                                                                              |
+| tts                   | 使用的 TTS 类型（`mi`                                                   | `edge`                                                                                                    | `openai`)       | `mi` |
+| tts_voice             | TTS 的嗓音                                                              | `zh-CN-XiaoxiaoNeural`(edge)                                                                              | `alloy`(openai) |
+| prompt                | 自定义prompt                                                            | `请用100字以内回答`                                                                                       |
+| keyword               | 自定义请求词列表                                                        | `["请问"]`                                                                                                |
+| change_prompt_keyword | 更改提示词触发列表                                                      | `["更改提示词"]`                                                                                          |
+| start_conversation    | 开始持续对话关键词                                                      | `开始持续对话`                                                                                            |
+| end_conversation      | 结束持续对话关键词                                                      | `结束持续对话`                                                                                            |
+| stream                | 使用流式响应，获得更快的响应                                            | `false`                                                                                                   |
+| proxy                 | 支持 HTTP 代理，传入 http proxy URL                                     | ""                                                                                                        |
+| gpt_options           | OpenAI API 的参数字典                                                   | `{}`                                                                                                      |
+| bing_cookie_path      | NewBing使用的cookie路径，参考[这里]获取                                 | 也可通过环境变量 `COOKIE_FILE` 设置                                                                       |
+| bing_cookies          | NewBing使用的cookie字典，参考[这里]获取                                 |                                                                                                           |
+| deployment_id         | Azure OpenAI 服务的 deployment ID                                       | 参考这个[如何找到deployment_id](https://github.com/yihong0618/xiaogpt/issues/347#issuecomment-1784410784) |
+| api_base              | 如果需要替换默认的api,或者使用Azure OpenAI 服务                         | 例如：`https://abc-def.openai.azure.com/`                                                                 |
 
 [这里]: https://github.com/acheong08/EdgeGPT#getting-authentication-required
 
@@ -226,16 +225,17 @@ docker run -v <your-config-dir>:/config yihong0618/xiaogpt --config=/config/conf
  docker buildx build --platform=linux/amd64 -t xiaogpt-x86 .
 ```
 
-### Add edge-tts
-edge-tts提供了类似微软tts的能力
-- https://github.com/rany2/edge-tts
+### 第三方 TTS
+我们目前支持两种第三方 TTS：edge/openai
+
+[edge-tts](https://github.com/rany2/edge-tts) 提供了类似微软tts的能力
 
 #### Usage
-你可以通过参数`enable_edge_tts`, 来启用它
+你可以通过参数 `tts`, 来启用它
 ```json
 {
-  "enable_edge_tts": true,
-  "edge_tts_voice": "zh-CN-XiaoxiaoNeural"
+  "tts": "edge",
+  "tts_voice": "zh-CN-XiaoxiaoNeural"
 }
 ```
 
@@ -249,16 +249,13 @@ edge-tts --list-voices
 由于 Edge TTS 启动了一个本地的 HTTP 服务，所以需要将容器的端口映射到宿主机上，并且指定本地机器的 hostname:
 
 ```shell
-docker run -v <your-config-dir>:/config yihong0618/xiaogpt -p 9527:9527 -e XIAOGPT_HOSTNAME=<your ip> --config=/config/config.json
+docker run -v <your-config-dir>:/config -p 9527:9527 -e XIAOGPT_HOSTNAME=<your ip> yihong0618/xiaogpt --config=/config/config.json
 ```
 
 注意端口必须映射为与容器内一致，XIAOGPT_HOSTNAME 需要设置为宿主机的 IP 地址，否则小爱无法正常播放语音。
 
-如果不想使用本地的HTTP服务器，可以将配置中的 `localhost` 设置为 `false`，这样 Edge TTS 会通过一个网络上的三方服务器加载输出音频文件，但是这样会导致响应速度变慢。
-
 ## 推荐的 fork
 
-- [MIGPT](https://github.com/Afool4U/MIGPT) -> 基于 API 流式对话的低延迟版MIGPT
 - [XiaoBot](https://github.com/longbai/xiaobot) -> Go语言版本的Fork, 带支持不同平台的UI
 
 ## 感谢
