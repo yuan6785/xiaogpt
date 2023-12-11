@@ -85,7 +85,7 @@ class Ernie4Bot(ChatHistoryMixin, BaseBot):
                 print(str(e))
             if r.strip() != "": # 判断r是否为空，为空则不添加
                 self.add_message(query, r)  
-            print('rr:', r)
+            print('rrr:', r)
             return r
         else:
             return "读取到小爱信息可能为空"
