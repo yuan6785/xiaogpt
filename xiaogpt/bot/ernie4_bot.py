@@ -12,6 +12,7 @@ import concurrent.futures
 
 
 class Ernie4Bot(ChatHistoryMixin, BaseBot):
+    name = "Ernie4"
     def __init__(self, baidu_api_key, baidu_secret_key) -> None:
         self.history = []
         #
