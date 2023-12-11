@@ -171,7 +171,7 @@ def main():
         dest="baidu_secret_key",
         help="baidu secret key",
     )
-    group.add_argument(
+    bot_group.add_argument(
         "--use_ernie4", # ERNIE-Bot 4.0, 文心一言4.0大模型
         dest="bot",
         action="store_const",
