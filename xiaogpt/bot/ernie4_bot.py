@@ -83,8 +83,9 @@ class Ernie4Bot(ChatHistoryMixin, BaseBot):
                 r = await self.get_ask_res_async(query)
             except Exception as e:
                 print(str(e))
-            self.add_message(query, r)  # todo 判断query是否为空，为空则不添加
-            print(r)
+            if r.strip() != "": # 判断r是否为空，为空则不添加
+                self.add_message(query, r)  
+            print('r:', r)
             return r
         else:
             return "读取到小爱信息可能为空"
