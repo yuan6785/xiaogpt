@@ -45,7 +45,10 @@ class Ernie4Bot(ChatHistoryMixin, BaseBot):
     def get_ask_res(self, query):
         ak = self.get_access_token()
         url = (
-            "https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/completions_pro?access_token="
+            # ERNIE-Bot-4
+            # "https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/completions_pro?access_token="
+            # ERNIE-Bot
+            "https://aip.baidubce.com/rpc/2.0/ai_custom/v1/wenxinworkshop/chat/completions?access_token="
             + ak
         )
         #
