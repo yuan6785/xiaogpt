@@ -159,7 +159,7 @@ Bard-API [参考](https://github.com/dsdanielpark/Bard-API)
 | tts                   | 使用的 TTS 类型（`mi`                                                   | `edge`                                                                                                    | `openai`)       | `mi` |
 | tts_voice             | TTS 的嗓音                                                              | `zh-CN-XiaoxiaoNeural`(edge)                                                                              | `alloy`(openai) |
 | prompt                | 自定义prompt                                                            | `请用100字以内回答`                                                                                       |
-| keyword               | 自定义请求词列表                                                        | `["请问"]`                                                                                                |
+| keyword               | 自定义请求词列表                                                        | `["请"]`                                                                                                |
 | change_prompt_keyword | 更改提示词触发列表                                                      | `["更改提示词"]`                                                                                          |
 | start_conversation    | 开始持续对话关键词                                                      | `开始持续对话`                                                                                            |
 | end_conversation      | 结束持续对话关键词                                                      | `结束持续对话`                                                                                            |
@@ -177,7 +177,7 @@ Bard-API [参考](https://github.com/dsdanielpark/Bard-API)
 
 1. 请开启小爱同学的蓝牙
 2. 如果要更改提示词和 PROMPT 在代码最上面自行更改
-3. 目前已知 LX04、X10A 和 L05B L05C 可能需要使用 `--use_command`，否则可能会出现终端能输出GPT的回复但小爱同学不回答GPT的情况
+3. 目前已知 LX04、X10A 和 L05B L05C 可能需要使用 `--use_command`，否则可能会出现终端能输出GPT的回复但小爱同学不回答GPT的情况。这几个型号也只支持小爱原本的 tts.
 4. 在wsl使用时, 需要设置代理为 http://wls的ip:port(vpn的代理端口), 否则会出现连接超时的情况, 详情 [报错： Error communicating with OpenAI](https://github.com/yihong0618/xiaogpt/issues/235)
 
 ## QA

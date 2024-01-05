@@ -16,6 +16,7 @@ HARDWARE_COMMAND_DICT = {
     # hardware: (tts_command, wakeup_command)
     "LX06": ("5-1", "5-5"),
     "L05B": ("5-3", "5-4"),
+    "S12": ("5-1", "5-5"),  # 第一代小爱，型号MDZ-25-DA
     "S12A": ("5-1", "5-5"),
     "LX01": ("5-1", "5-5"),
     "L06A": ("5-1", "5-5"),
@@ -43,7 +44,7 @@ EDGE_TTS_DICT = {
 
 DEFAULT_COMMAND = ("5-1", "5-5")
 
-KEY_WORD = ("帮我", "请回答", "请")
+KEY_WORD = ("帮我", "请")
 CHANGE_PROMPT_KEY_WORD = ("更改提示词",)
 PROMPT = "以下请用100字以内回答，请只回答文字不要带链接"
 # simulate_xiaoai_question
